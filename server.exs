@@ -1,9 +1,13 @@
 defmodule Server do
 
-  def start, do: spawn(Server, :loop, [[]])
+  def start, do: spawn(Server, :init, [])
+
+  def init do
+    Process.flag(:trap_exit, true)
+    loop([])
+  end
 
   def loop(clients) do
-    Process.flag(:trap_exit, true)
     receive do
       {sender, :connect, username} ->
         Process.link(sender)

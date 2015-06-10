@@ -1,10 +1,10 @@
 defmodule Client do
 
   def connect(username, server) do
-    spawn(Client, :start, [username, server])
+    spawn(Client, :init, [username, server])
   end
 
-  def start(username, server) do
+  def init(username, server) do
     send server, {self, :connect, username}
     loop(username, server)
   end
